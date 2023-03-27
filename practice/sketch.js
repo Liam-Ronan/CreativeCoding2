@@ -20,13 +20,13 @@ let table = [
     }
 ]
 
-function prelaod() {
-    // table = loadTable("./data/people.json", "JSON");
+function preload() {
+    // table = loadTable("data/people.json", "JSON");
 }
 
 function setup () {
 
-    //Maps - create new array of specified attributes
+    //Maps - create a new array of specified attributes
     let newArray2 = table.map(table => table.name)
     console.log(newArray2);
     let newArray = table.map(table => table.age)

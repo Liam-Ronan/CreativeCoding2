@@ -9,4 +9,5 @@ class Journey {
         this.toLng =  _toLng;
         this.distance = _distance;
     }
+
 }

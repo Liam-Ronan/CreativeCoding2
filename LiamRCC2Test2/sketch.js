@@ -3,6 +3,7 @@ let cities =[];
 let filteredCities;
 let journeys = [];
 let maxLat, minLat, maxLng, minLng;
+let maxPopulation = 10000;
 
 function preload() {   
     table = loadTable("cities.csv", "csv", "header");
@@ -11,7 +12,8 @@ function preload() {
 
 function setup(){
     createCanvas(500,500);
-    angleMode(DEGREES)
+    background(50,50,50)
+    angleMode(DEGREES);
 
     for(let i = 0; i < table.getRowCount(); i++) {
        cities.push(new City(table.rows[i].obj.city, +table.rows[i].obj.lat, +table.rows[i].obj.lng, table.rows[i].obj.country, +table.rows[i].obj.population));
@@ -19,7 +21,7 @@ function setup(){
     console.log(cities);
 
     //filtering cities with population greater than 140000
-    filteredCities = cities.filter(row => row.population > 14000);
+    filteredCities = cities.filter(row => row.population > maxPopulation);
     console.log(filteredCities);
 
     //Average population using a reduce method
@@ -42,7 +44,7 @@ function setup(){
 
     //Journeys
     for(let x = 0; x < filteredCities.length; x++) {
-        for(let i = x+1; i < filteredCities.length; i++) {
+        for(let i = (x+1); i < filteredCities.length; i++) {
                 let fromCity = filteredCities[x];
                 let toCity = filteredCities[i];
 
@@ -70,5 +72,24 @@ function setup(){
 
 
 function draw(){
-    background(0)
+
+    filteredCities.forEach(city => {
+        let posX = map(city.lng, minLng, maxLng, 50, 400)
+        let posY = map(city.lat, minLat, maxLat, 50, 400)
+        city.render(posX, posY)
+    });
+
+    journeys.forEach(journey => {
+        let fromX = map(journey.fromLat, minLat, maxLat, 50, 400)
+        let fromY = map(journey.fromLng, minLng, maxLng, 50, 400)
+        let toX = map(journey.toLat, minLat, maxLat, 50, 400)
+        let toY = map(journey.toLng, minLng, maxLng, 50, 400)
+
+        stroke(100)
+        line(fromX, -fromY+500, toY, -toX+500)
+    });
+
+
 }
+
+

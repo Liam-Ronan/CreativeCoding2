@@ -1,46 +1,40 @@
 class Airplane {
-    constructor(_speedX = 2, _speedY = -2, _posX, _posY, _altitude = 1000, _size = 0.5) {
-        this.speedX = random(-2, 2);
-        this.speedY =random(-2, 2);
-        this.posX = random(10, 490);
-        this.posY = random(10, 490);
+    constructor(_velocity, _pos = createVector(random(0, width), random(0, height)), _altitude = 1000) {
+        this.velocity = createVector(random(-2, 2), random(-2, 2)) ;
+        this.pos = _pos;
         this.altitude = random(1000, 100000);
-        this.size = random(0.5, 1.2);
     }
 
-    render() {
-        fill(255)
-        noStroke()
+    drawPlane() {
+        fill(255);
+        noStroke();
 
         push()
-            translate(this.posX,this.posY)
+            translate(this.pos.x,this.pos.y);
             beginShape();
-            scale(this.size)
-            let heading = atan2(this.speedY, this.speedX);
-            rotate(heading + 90);
-            vertex(0,0);
-            vertex(apWidth / 2, apTailLength);
-            vertex(0, -apHeight + apTailLength)
-            vertex(-apWidth / 2, apTailLength)
+                rotate(this.velocity.heading() + 90);
+                vertex(0,0);
+                vertex(apWidth / 2, apTailLength);
+                vertex(0, -apHeight + apTailLength);
+                vertex(-apWidth / 2, apTailLength);
             endShape(CLOSE);
         pop()
     }
 
     move() {
-        this.posX += this.speedX;
-        this.posY += this.speedY;
+        this.pos.add(this.velocity);
 
-        if(this.posX > width) {
-            this.posX = 0;
+        if(this.pos.x > width) {
+            this.pos.x = 0;
         }
-        if(this.posX < 0) {
-            this.posX = width;
+        if(this.pos.x < 0) {
+            this.pos.x = width;
         }
-        if(this.posY > height) {
-            this.posY = 0;
+        if(this.pos.y > height) {
+            this.pos.y = 0;
         }
-        if(this.posY < 0) {
-            this.posY = height;
+        if(this.pos.y < 0) {
+            this.pos.y = height;
         }
     }
 }

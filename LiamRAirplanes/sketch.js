@@ -9,14 +9,13 @@ function setup() {
     angleMode(DEGREES);
 
     airfield = new Airfield();
-    for(let i = 0; i < 5; i++) {
-        airplanes.push(new Airplane());
-    }
+    airfield.createPlanes();
     console.log(airplanes);
 }
 
 function draw() {
     background(0);
+
     airplanes.forEach(airplane => {
         airplane.render();
         airplane.move();
